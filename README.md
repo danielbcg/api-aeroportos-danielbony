@@ -40,3 +40,10 @@ Desenvolver uma API REST completa seguindo os padrões RESTful para gerenciar o 
 ```bash
 git clone https://github.com/danielbony/api-aeroportos-danielbony.git
 cd api-aeroportos-danielbony
+
+
+## ▶️ Como Executar a Aplicação
+
+### Executar em desenvolvimento:
+```bash
+mvn spring-boot:run

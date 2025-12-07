@@ -90,11 +90,10 @@ public class AeroportoControllerIT {
     @Test
 @Order(3)
 void testBuscarAeroportoInexistente_DeveRetornar404() throws Exception {
-    // REMOVA a verificação do jsonPath - deixe apenas status 404
+    
     mockMvc.perform(get("/api/v1/aeroportos/XXX"))
             .andExpect(status().isNotFound());
-    // REMOVA esta linha:
-    // .andExpect(jsonPath("$.message").value("Aeroporto com código IATA 'XXX' não encontrado"));
+    
 }
 
     @Test
