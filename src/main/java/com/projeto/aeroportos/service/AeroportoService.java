@@ -22,7 +22,8 @@ public class AeroportoService {
 
     // Buscar por IATA
     public Aeroporto buscarPorIata(String codigoIata) {
-        return aeroportoRepository.findByCodigoIata(codigoIata.toUpperCase())
+        String iataUpper = codigoIata.toUpperCase();
+        return aeroportoRepository.findByCodigoIata(iataUpper)
                 .orElseThrow(() -> new AeroportoNaoEncontradoException(codigoIata));
     }
 
@@ -30,11 +31,15 @@ public class AeroportoService {
     @Transactional
     public Aeroporto criar(Aeroporto aeroporto) {
         // Converte IATA para maiúsculas
-        aeroporto.setCodigoIata(aeroporto.getCodigoIata().toUpperCase());
+        String iataUpper = aeroporto.getCodigoIata().toUpperCase();
+        aeroporto.setCodigoIata(iataUpper);
+        
+        // Converte código país para maiúsculas
+        aeroporto.setCodigoPaisIso(aeroporto.getCodigoPaisIso().toUpperCase());
         
         // Valida se já existe
-        if (aeroportoRepository.existsByCodigoIata(aeroporto.getCodigoIata())) {
-            throw new IllegalArgumentException("Aeroporto com código IATA '" + aeroporto.getCodigoIata() + "' já existe.");
+        if (aeroportoRepository.existsByCodigoIata(iataUpper)) {
+            throw new IllegalArgumentException("Aeroporto com código IATA '" + iataUpper + "' já existe.");
         }
         
         return aeroportoRepository.save(aeroporto);
@@ -43,6 +48,7 @@ public class AeroportoService {
     // Atualizar aeroporto
     @Transactional
     public Aeroporto atualizar(String codigoIata, Aeroporto aeroportoAtualizado) {
+        // Busca aeroporto existente (já lança exceção se não existir)
         Aeroporto aeroportoExistente = buscarPorIata(codigoIata);
         
         // Atualiza campos (NÃO atualiza o código IATA!)
@@ -59,10 +65,15 @@ public class AeroportoService {
     // Deletar aeroporto
     @Transactional
     public void deletar(String codigoIata) {
-        if (!aeroportoRepository.existsByCodigoIata(codigoIata.toUpperCase())) {
+        String iataUpper = codigoIata.toUpperCase();
+        
+        // Primeiro verifica se existe (mais eficiente)
+        if (!aeroportoRepository.existsByCodigoIata(iataUpper)) {
             throw new AeroportoNaoEncontradoException(codigoIata);
         }
-        aeroportoRepository.deleteByCodigoIata(codigoIata.toUpperCase());
+        
+        // Deleta por IATA
+        aeroportoRepository.deleteByCodigoIata(iataUpper);
     }
 
     // ========== MÉTODOS PARA TESTES (exigidos no trabalho) ==========
