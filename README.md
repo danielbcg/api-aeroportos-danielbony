@@ -75,3 +75,38 @@ mvn verify
 
 # Todos os testes
 mvn clean verify
+
+
+## 📡 Endpoints da API
+
+| Método | Endpoint                    | Descrição                       | Status Code                  |
+|--------|-----------------------------|---------------------------------|------------------------------|
+| GET    | `/api/v1/aeroportos`        | Lista todos aeroportos          | 200 OK                       |
+| GET    | `/api/v1/aeroportos/{iata}` | Busca aeroporto por código IATA | 200 OK / 404 Not Found       |
+| POST   | `/api/v1/aeroportos`        | Cria novo aeroporto             | 201 Created / 400 Bad Request|
+| PUT    | `/api/v1/aeroportos/{iata}` | Atualiza aeroporto existente    | 200 OK / 404 Not Found       |
+| DELETE | `/api/v1/aeroportos/{iata}` | Remove aeroporto              | 204 No Content / 404 Not Found |
+
+### Exemplos de Requisição
+```json
+// POST /api/v1/aeroportos
+{
+  "nome": "Aeroporto Internacional",
+  "codigoIata": "ABC",
+  "cidade": "São Paulo",
+  "codigoPaisIso": "BR",
+  "latitude": -23.4356,
+  "longitude": -46.4731,
+  "altitude": 750.0
+}
+
+// PUT /api/v1/aeroportos/ABC
+{
+  "nome": "Aeroporto Atualizado",
+  "codigoIata": "ABC",
+  "cidade": "Rio de Janeiro",
+  "codigoPaisIso": "BR",
+  "latitude": -22.9103,
+  "longitude": -43.1631,
+  "altitude": 800.0
+}
