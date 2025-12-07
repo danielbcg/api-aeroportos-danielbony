@@ -47,3 +47,31 @@ cd api-aeroportos-danielbony
 ### Executar em desenvolvimento:
 ```bash
 mvn spring-boot:run
+
+
+## 🧪 Testes Implementados
+
+### Testes de Unidade (AeroportoServiceTest.java)
+- ✅ Conversão de pés para metros (`converterPesParaMetros()`)
+- ✅ Mapeamento de país para código ISO (`obterIsoPais()`)
+- ✅ CRUD completo de aeroportos
+- ✅ Validação de IATA duplicado
+- ✅ Tratamento de exceções
+- ✅ 16 testes unitários no total
+
+### Testes de Integração (AeroportoControllerIT.java)
+- ✅ Testes de todos os endpoints REST
+- ✅ Validações de entrada
+- ✅ Status HTTP corretos
+- ✅ 12 testes de integração no total
+
+### Como Executar Testes
+```bash
+# Testes de unidade
+mvn test
+
+# Testes de integração
+mvn verify
+
+# Todos os testes
+mvn clean verify

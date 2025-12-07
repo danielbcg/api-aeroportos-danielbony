@@ -37,6 +37,12 @@ public class AeroportoService {
         // Converte código país para maiúsculas
         aeroporto.setCodigoPaisIso(aeroporto.getCodigoPaisIso().toUpperCase());
         
+        // IMPORTANTE: Converte altitude de PÉS para METROS
+        // O usuário envia em metros, mas se viesse do CSV estaria em pés
+        // Para ser consistente, mantemos em metros
+        // Se no futuro quisermos importar CSV, converteremos aqui
+        // aeroporto.setAltitude(converterPesParaMetros(aeroporto.getAltitude()));
+        
         // Valida se já existe
         if (aeroportoRepository.existsByCodigoIata(iataUpper)) {
             throw new IllegalArgumentException("Aeroporto com código IATA '" + iataUpper + "' já existe.");
@@ -97,6 +103,10 @@ public class AeroportoService {
             case "japan", "japão" -> "JP";
             case "argentina" -> "AR";
             case "chile" -> "CL";
+            case "united kingdom", "uk", "reino unido" -> "GB";
+            case "canada" -> "CA";
+            case "mexico", "méxico" -> "MX";
+            case "australia", "austrália" -> "AU";
             default -> "??";
         };
     }
